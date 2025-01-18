@@ -1,28 +1,34 @@
 from textual.app import App, ComposeResult
-from textual.widgets import DirectoryTree, Footer, Header, TextArea, Static
-from textual.containers import Horizontal, Vertical
+from textual.widgets import DirectoryTree, Footer, Header, TextArea
+from textual.containers import Horizontal
+from terminalEmulator import TerminalEmulator
+from File import OpenFile, GetFilePath
 
+
+filePath = GetFilePath("main.py")
 
 class Bunny(App):
-    """A Textual-based TUI resembling VS Code with a directory viewer, editor, and terminal."""
 
     CSS = """
         #file-viewer{
             width: 20%;
         }
+        #terminal{
+            height: 20%;
+        }
     """
 
     def compose(self) -> ComposeResult:
-
         yield Header("Bunny", name="Bunny", icon="🐰")
 
         with Horizontal():
-            yield DirectoryTree(".", id="file-viewer")
-            yield TextArea()
+            yield DirectoryTree(path=".", id="file-viewer")
+            yield TextArea(OpenFile(filePath), language="Python")
 
-        # Bottom panel: Terminal
-        yield Static("Terminal", classes="terminal-box")
+        # Add the terminal section using TextArea with the current directory as the prompt
+        yield TextArea(TerminalEmulator(), classes="terminal-box", id="terminal")
 
+        # Footer section
         yield Footer()
 
 
