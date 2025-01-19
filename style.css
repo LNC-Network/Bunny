@@ -1,0 +1,18 @@
+#file-viewer {
+    width: 20%;
+}
+
+#terminal {
+    height: 20%;
+}
+
+Settings {
+    align: center middle;
+}
+
+#Modal {
+    height: 80%;
+    width: 70%;
+    align: center top;
+    padding: 2 4;
+}

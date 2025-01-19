@@ -4,6 +4,9 @@
 
 Bunny is a terminal-based user interface (TUI) for editing code, viewing directories, and running terminal commands. It combines a code editor, directory viewer, and terminal within a single, easy-to-use interface. It’s designed for users who prefer a text-based interface over traditional graphical user interfaces (GUIs).
 
+![Bunny Logo](./images/Screenshot%202025-01-19%20103239.png)
+
+
 ---
 
 ## Download the Latest Release

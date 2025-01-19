@@ -1,24 +1,40 @@
 from textual.app import App, ComposeResult
-from textual.widgets import DirectoryTree, Footer, Header, TextArea
-from textual.containers import Horizontal
+from textual.widgets import DirectoryTree, Footer, Header, TextArea, Label
+from textual.containers import Horizontal, Container
+from textual.screen import ModalScreen
 from terminalEmulator import TerminalEmulator
 from File import OpenFile, GetFilePath
 
 
 filePath = GetFilePath("main.py")
 
-class Bunny(App):
 
-    CSS = """
-        #file-viewer{
-            width: 20%;
-        }
-        #terminal{
-            height: 20%;
-        }
-    """
+class Settings(ModalScreen[None]):
+    BINDINGS = [("escape", "dismiss")]
+    CSS_PATH = "style.css"
+
+    def action_pop_screen(self):
+        self.push_screen(Bunny())
 
     def compose(self) -> ComposeResult:
+        with Container(id="Modal"):
+            yield Label("Hello, World! Press Escape to close.", id="modal-label")
+
+
+class Bunny(App):
+    CSS_PATH = "style.css"
+    BINDINGS = [("ctrl+q", "quit", "Quit"), ("f12", "settings", "Open Settings")]
+
+    def action_quit(self):
+        """Quit the application."""
+        self.exit()
+
+    def action_settings(self) -> None:
+        """Open the settings modal."""
+        self.push_screen(Settings())
+
+    def compose(self) -> ComposeResult:
+        """Compose the layout of the application."""
         yield Header("Bunny", name="Bunny", icon="🐰")
 
         with Horizontal():
